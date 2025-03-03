@@ -1,0 +1,61 @@
+models:
+  # --------- Modelos Correspondientes a las Aplicaciones registradas ---------
+  # Aplicacion
+  Aplicacion:
+    app_key: string
+    tipo: string
+    descripcion: string
+    version: string default:1.0.0
+    precio: integer
+    app_status: boolean default:true
+    relationships:
+      hasMany: Contrato
+      belongsToMany: Modulo
+
+  # Modulo
+  Modulo:
+    nombre: string
+    descripcion: string
+    relationships:
+      belongsToMany: Aplicacion
+
+  # --------- Modelos Correspondientes a la informacion de los clientes ---------
+  # Cliente
+  Cliente:
+    nombre: string
+    cedula: string
+    telefono: string
+    direccion: string
+    relationships:
+      hasOne: Contrato, Asesor
+
+  # Contrato
+  Contrato:
+    periodo: tinyint default:1
+    fecha_inicio: date
+    fecha_fin: date nullable
+    estado_contrato: enum:activo,inactivo,pendiente
+    notas: text
+    ultima_factura_id: string
+    relationships:
+      belongsTo: Cliente, Aplicacion, Asesor
+      belongsToMany: Servicio
+
+  # --------- Modelos Correspondientes a administracion de trabajadores ---------
+  # Asesor
+  Asesor:
+    nombre: string
+    cedula: string
+    telefono: string
+    direccion: string
+    tipo: string
+    no_ventas: integer default:0
+    relationships:
+      hasMany: Cliente
+
+  # Factura
+  # Pago
+  # Servicio
+
+  # Email
+  # Notificacion
