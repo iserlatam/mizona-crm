@@ -3,6 +3,7 @@
 namespace App\Livewire\App\MzApps;
 
 use App\Models\Aplicacion;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -25,10 +26,15 @@ class HandleApp extends Component implements HasForms
     {
         return $form
             ->schema([
-                Toggle::make('app_status')
-                    ->required(),
-                TextInput::make('descripcion')
-                    ->required(),
+                Grid::make(2)
+                    ->schema([
+                        TextInput::make('app_key'),
+                        TextInput::make('app_status')
+                            ->required(),
+                        TextInput::make('descripcion')
+                            ->required()
+                            ->columnSpanFull(),
+                    ])
                 // ...
             ])
             ->statePath('data');
