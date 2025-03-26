@@ -1,23 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.mz-container{
-    @apply w-full py-6;
-}
-
-.mz-container .mz-wrapper {
-    @apply mx-auto max-w-screen-2xl sm:px-6 lg:px-4;
-}
-
-.mz-container .mz-wrapper .mz-frame {
-    @apply lg:px-4 lg:py-4 overflow-hidden bg-white shadow sm:rounded-lg dark:bg-gray-800;
-}
-
-.mz-title {
-    @apply text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200;
-}
-
-.mz-subtitle {
-    @apply leading-3 text-gray-800;
-}
+@tailwind variants;

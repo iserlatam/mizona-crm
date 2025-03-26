@@ -33,7 +33,7 @@
                 @livewire('app.mz-apps.handle-app')
             </div>
             <div class="px-6 py-12 border-2 border-indigo-300 rounded w-full">
-                @livewire('app.mz-apps.handle-app')
+                @livewire('app.guests.contact-form')
             </div>
         </div>
     </div>
