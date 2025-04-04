@@ -20,10 +20,8 @@ class ApiController extends Controller
 
         $indexQuote = rand(0, 20);
 
-        $app = Aplicacion::findOrFail(2);
-
         return response()->json([
-            'mzc_app_status' => $app->app_status,
+            'mzc_app_status' => true,
             'mzc_app_modules' => [
                 'mzm_registros' => false,
                 'mzm_trabajos' => false,

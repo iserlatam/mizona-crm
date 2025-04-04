@@ -1,61 +1,87 @@
 models:
-  # --------- Modelos Correspondientes a las Aplicaciones registradas ---------
-  # Aplicacion
-  Aplicacion:
-    app_key: string
-    tipo: string
-    descripcion: string
-    version: string default:1.0.0
-    precio: integer
-    app_status: boolean default:true
-    relationships:
-      hasMany: Contrato
-      belongsToMany: Modulo
+    # --------- MODELOS CORRESPONDIENTES A LAS APLICACIONES REGISTRADAS ---------
+    # APLICACION
+    Aplicacion:
+      key: string
+      tipo: string
+      descripcion: string nullable
+      version: string default:1.0.0
+      modalidad_pago: enum:m,t,s,ops # MENSUAL, TRIMESTRAL, SEMESTRAL, OPERACIONES
+      cant_ops: integer
+      valor: integer
+      status: boolean default:true
+      doc_apoyo: text nullable
+      relationships:
+        hasMany: Contrato
+        belongsToMany: Modulo
 
-  # Modulo
-  Modulo:
-    nombre: string
-    descripcion: string
-    relationships:
-      belongsToMany: Aplicacion
+    # MODULO
+    Modulo:
+      nombre: string
+      descripcion: string
+      costo: integer
+      relationships:
+        belongsToMany: Aplicacion
 
-  # --------- Modelos Correspondientes a la informacion de los clientes ---------
-  # Cliente
-  Cliente:
-    nombre: string
-    cedula: string
-    telefono: string
-    direccion: string
-    relationships:
-      hasOne: Contrato, Asesor
+    # --------- MODELOS CORRESPONDIENTES A LA INFORMACION DE LOS CLIENTES ---------
+    # CLIENTE
+    Cliente:
+      nombre_completo: string
+      tipo_doc: string nullable
+      no_doc: string nullable
+      telefono: string nullable
+      pais: string nullable
+      direccion: string nullable
+      ultimo_pago: unsignedInteger nullable
+      relationships:
+        hasOne: Contrato, Asesor
 
-  # Contrato
-  Contrato:
-    periodo: tinyint default:1
-    fecha_inicio: date
-    fecha_fin: date nullable
-    estado_contrato: enum:activo,inactivo,pendiente
-    notas: text
-    ultima_factura_id: string
-    relationships:
-      belongsTo: Cliente, Aplicacion, Asesor
-      belongsToMany: Servicio
+    # CONTRATO
+    Contrato:
+      id: uuid
+      periodo: tinyint default:1
+      fecha_inicio: date
+      fecha_fin: date nullable
+      vigencia: enum:a,i
+      notas: text
+      ultima_factura_id: unsignedInteger
+      relationships:
+        belongsTo: Cliente, Aplicacion, Asesor
+        belongsToMany: Servicio
 
-  # --------- Modelos Correspondientes a administracion de trabajadores ---------
-  # Asesor
-  Asesor:
-    nombre: string
-    cedula: string
-    telefono: string
-    direccion: string
-    tipo: string
-    no_ventas: integer default:0
-    relationships:
-      hasMany: Cliente
+    # --------- MODELOS CORRESPONDIENTES A ADMINISTRACION DE TRABAJADORES ---------
+    # ASESOR
+    Asesor:
+      nombre: string
+      cedula: string
+      telefono: string
+      direccion: string
+      tipo: string
+      no_ventas: integer default:0
+      relationships:
+        hasMany: Cliente
 
-  # Factura
-  # Pago
-  # Servicio
+    # FACTURA
+    Factura:
+      id: ulid unique
+      total: integer
+      estado: enum:c,a,p # CANCELADA, APLAZADA, PENDIENTE
+      relationships:
+        belongsTo: Contrato
+        hasMany: Pago
 
-  # Email
-  # Notificacion
+    # PAGO
+    Pago:
+      id: ulid unique
+      fecha: date
+      valor: integer
+      estado: enum:a,r # APROBADO, RECHAZADO
+      relationships:
+        belongsTo: Factura
+    # SERVICIO
+
+    # EMAIL
+    # NOTIFICACION
+
+controllers:
+
